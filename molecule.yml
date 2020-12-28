@@ -1,0 +1,36 @@
+---
+resources:
+- name: git-src
+  type: git
+  source:
+    uri: https://github.com/blauwe-lucht/ansible-role-docker-webapps
+    branch: main
+
+jobs:
+- name: test
+  public: true
+  serial: true
+  plan:
+  - get: git-src
+    trigger: true
+  - task: task-molecule
+    privileged: true
+    config:
+      platform: linux
+      image_resource:
+        type: registry-image
+        source:
+          repository: gaahrdner/molecule
+          tag: latest
+      inputs:
+      - name: git-src
+      run:
+        dir: git-src
+        path: /bin/sh
+        args:
+        - -exc
+        - |
+          rsyslogd
+          source /usr/local/bin/docker-lib.sh
+          start_docker
+          molecule test

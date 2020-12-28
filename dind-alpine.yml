@@ -1,0 +1,23 @@
+---
+jobs:
+- name: test
+  public: true
+  serial: true
+  plan:
+  - task: task-dind
+    privileged: true
+    config:
+      platform: linux
+      image_resource:
+        type: registry-image
+        source:
+          repository: amidos/dcind
+          tag: latest
+      run:
+        path: /bin/bash
+        args:
+        - -exc
+        - |
+          source /docker-lib.sh
+          start_docker
+          docker info
