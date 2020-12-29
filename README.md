@@ -19,5 +19,5 @@ Some experiments I ran when figuring out Docker-in-Docker in Concourse.
 
 After that you need to start the builds in de UI manually.
 
-Result: I gave up and moved to BuildBot for these kind of builds. The main reason for this is that Concourse does NOT use Docker,
+Result: I gave up and moved to Jenkins for these kind of builds. The main reason for this is that Concourse does NOT use Docker,
 but Garden/runc to start containers which is not 100% compatible with Docker. Which also means you can't bind /var/run/docker.sock.
